@@ -1,0 +1,95 @@
+@import url('https://fonts.cdnfonts.com/css/pp-neue-montreal');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @layer components {
+  .underline-link {
+    @apply text-inherit relative underline underline-dotted underline-transparent hover:underline solid;
+  }
+
+  .underline-link::after {
+    @apply content-empty absolute inset-x-0 bottom-0 h-px transition-all duration-300 ease-out;
+  }
+
+  .underline-link:hover::after {
+    @apply bg-[rgb(31,4,4)];
+  }
+} */
+
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+}
+@layer components {
+  .align-element {
+    @apply mx-auto max-w-[1132px];
+  }
+}
+
+#scroll-bar {
+  scrollbar-width: 16px;
+}
+.map {
+  background: url('./assets/map.png');
+  min-width: none;
+  height: 538px;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.about-img {
+  background: url('./assets/about-img.png');
+  height: 520px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.sales-img {
+  background: url('./assets/sales-img.png');
+  height: 520px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.news-banner {
+  background: url('./assets/News_section.png');
+  min-height: 464px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 1022px) {
+  .sales-img {
+    height: 660px;
+    background-size: cover;
+  }
+  .about-img {
+    background: url('./assets/about-img-mobile.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  #imageC,
+  #imageA {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1022px) {
+  .about-img {
+    background: url('./assets/about-img-mobile.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 93vh;
+  }
+}
