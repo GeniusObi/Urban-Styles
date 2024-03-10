@@ -17,11 +17,7 @@ const Contact = () => {
           <ContactForm />
         </div>
         <div id="map" className="relative">
-          <img
-            src={map}
-            alt=""
-            className="object-fill    w-full min-h-[538px]"
-          />
+          <img src={map} alt="" className="object-fill w-full min-h-[538px]" />
           <MapZoomButtons />
         </div>
         {/* <div id="right-col" className="   self-start map relative ">
