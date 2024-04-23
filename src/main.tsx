@@ -1,10 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import { WishlistProvider } from './context/WishlistContext.tsx';
+import '@mantine/core/styles.css';
+
+import { MantineProvider } from '@mantine/core';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+  <MantineProvider>
+    <WishlistProvider>
+      <App />
+    </WishlistProvider>
+  </MantineProvider>
+);

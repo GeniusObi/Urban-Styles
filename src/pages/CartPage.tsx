@@ -1,5 +1,5 @@
 import { Form } from 'react-router-dom';
-import { CartTotals } from '../components';
+import { CartContainer, CartTotals } from '../components';
 
 export const action = async () => {
   return null;
@@ -7,14 +7,15 @@ export const action = async () => {
 
 const CartPage = () => {
   return (
-    <main className="px-12 py-36">
+    <section className="px-5 py-16 lg:px-12 lg:py-36">
       {/* Cart Items Information section*/}
-      <section className="container w-full flex gap-8">
+      <section className=" w-full  flex flex-col lg:flex-row gap-8">
         <div
           id="leftcol"
-          className=" grow-[2] flex flex-col gap-16  h-[992px] border border-red-300"
+          className=" grow-[2] flex flex-col gap-16  p-6 border border-red-300"
         >
           <h2 className="text-2xl">Carts</h2>
+          <CartContainer />
           <Form id="coupon-form" className=" h-[56px] gap-8 flex w-full">
             <input
               type="text"
@@ -32,7 +33,7 @@ const CartPage = () => {
         {/* Cart Totals */}
         <CartTotals />
       </section>
-    </main>
+    </section>
   );
 };
 

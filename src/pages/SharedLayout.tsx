@@ -19,7 +19,9 @@ const SharedLayout = () => {
       {cart && <AddedToCartAlert />}
       {(cart && wishlist) || wishlist ? <AddedToWishList /> : null}
       <Navbar />
-      <Outlet />
+      <section className="bg-[#FFF4F4]">
+        <Outlet />
+      </section>
       <Footer />
     </main>
   );

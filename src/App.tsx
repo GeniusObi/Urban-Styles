@@ -17,7 +17,7 @@ import About from './pages/About';
 import { loader as productsLoader } from './pages/Products';
 import { loader as singleProductLoader } from './pages/SingleProduct';
 // ACTIONS
-import { action as registerAction } from './pages/RegisterPage';
+// import { action as registerAction } from './pages/RegisterPage';
 import { action as loginAction } from './pages/Login';
 import { action as cartPageAction } from './pages/CartPage';
 
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
     path: '/register',
     element: <RegisterPage />,
     errorElement: <Error />,
-    action: registerAction,
+    // action: registerAction,
   },
 ]);
 

@@ -1,11 +1,13 @@
 import AddedToCartAlert from './AddedToCartAlert';
 import AddedToWishList from './AddedToWishList';
 import AllProducts from './AllProducts';
+import CartContainer from './CartContainer';
 import CartItem from './CartItem';
 import CartTotals from './CartTotals';
 import ContactForm from './ContactForm';
 import ErrorElement from './ErrorElement';
 import Footer from './Footer';
+import HoverBlock from './HoverBlock';
 import MapZoomButtons from './MapZoomButtons';
 import Navbar from './Navbar';
 import NewReleases from './NewReleases';
@@ -15,7 +17,6 @@ import ReviewsForm from './ReviewsForm';
 import SubmitBtn from './SubmitBtn';
 
 export {
-  CartItem,
   News,
   ErrorElement,
   SubmitBtn,
@@ -29,5 +30,8 @@ export {
   CartTotals,
   AddedToCartAlert,
   AddedToWishList,
+  HoverBlock,
   MapZoomButtons,
+  CartContainer,
+  CartItem,
 };

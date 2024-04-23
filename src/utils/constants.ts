@@ -50,43 +50,106 @@ reviews = [
     description:
       "Their unique approach to street wear is refreshing and i'm hooked.The reverse Stitch Hoodie I got is my new favorite cold-weather companion",
   },
+  {
+    name: 'Mike Ballack',
+    image: avatarD,
+    location: 'Lagos,Nigeria',
+    description:
+      "Their unique approach to street wear is refreshing and i'm hooked.The reverse Stitch Hoodie I got is my new favorite cold-weather companion",
+  },
+  {
+    name: 'Mike Ballack',
+    image: avatarD,
+    location: 'Lagos,Nigeria',
+    description:
+      "Their unique approach to street wear is refreshing and i'm hooked.The reverse Stitch Hoodie I got is my new favorite cold-weather companion",
+  },
+  {
+    name: 'Mike Ballack',
+    image: avatarD,
+    location: 'Lagos,Nigeria',
+    description:
+      "Their unique approach to street wear is refreshing and i'm hooked.The reverse Stitch Hoodie I got is my new favorite cold-weather companion",
+  },
+  {
+    name: 'Mike Ballack',
+    image: avatarD,
+    location: 'Lagos,Nigeria',
+    description:
+      "Their unique approach to street wear is refreshing and i'm hooked.The reverse Stitch Hoodie I got is my new favorite cold-weather companion",
+  },
 ];
 type ProductsData = {
+  id: number;
   name: string;
-  image: string;
+  image?: string;
   price: string;
+  description: string;
+  colors: string[];
+  sizes: string[];
+  amount: number;
 };
 export let products: ProductsData[];
 products = [
   {
+    id: 1,
     name: 'Slim V Neck Limited Pique Polo',
     image: slimOne,
     price: 'N40,000 ($20)',
+    description: 'wondeful piece',
+    amount: 10,
+    sizes: ['XL', 'L'],
+    colors: ['bg-blue-300', 'bg-red-600', 'bg-black'],
   },
   {
-    name: 'Slim V Neck Limited Pique Polo',
+    id: 2,
+    name: 'Slim V Rouned Neck',
     image: slimTwo,
     price: 'N40,000 ($20)',
+    description: 'wondeful piece',
+    amount: 3,
+    sizes: ['XL', 'L', 'M'],
+    colors: ['bg-blue-300', 'bg-red-600', 'bg-black'],
   },
   {
-    name: 'Slim V Neck Limited Pique Polo',
+    id: 3,
+    name: 'BigJOe Hoodie',
     image: slimThree,
     price: 'N40,000 ($20)',
+    description: 'wondeful piece',
+    amount: 3,
+    sizes: ['XL', 'L', 'M'],
+    colors: ['bg-blue-300', 'bg-red-600', 'bg-black'],
   },
   {
-    name: 'Slim V Neck Limited Pique Polo',
+    id: 4,
+    name: 'Lakers Vest',
     image: slimFour,
     price: 'N40,000 ($20)',
+    description: 'wondeful piece',
+    amount: 3,
+    sizes: ['XL', 'L', 'M'],
+    colors: ['bg-blue-300', 'bg-red-600', 'bg-black'],
   },
   {
-    name: 'Slim V Neck Limited Pique Polo',
+    id: 5,
+    name: 'Nike Polo',
     image: slimFive,
     price: 'N40,000 ($20)',
+    description: 'wondeful piece',
+    amount: 3,
+    sizes: ['XL', 'L', 'M'],
+    colors: ['bg-blue-300', 'bg-red-600', 'bg-black'],
   },
   {
-    name: 'Slim V Neck Limited Pique Polo',
+    id: 6,
+    name: 'Addidas Big Hoodie',
     image: slimSix,
     price: 'N40,000 ($20)',
+    description: 'wondeful piece',
+    amount: 3,
+    sizes: ['XL', 'L', 'M'],
+    colors: ['bg-blue-300', 'bg-red-600', 'bg-black'],
   },
 ];
 export const products_url = '/.netlify/functions/products';

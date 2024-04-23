@@ -106,6 +106,7 @@ export const PlusIcon = () => {
       height="14"
       viewBox="0 0 14 14"
       fill="none"
+      className="2xl:h-14"
     >
       <path d="M6 6V0H8V6H14V8H8V14H6V8H0V6H6Z" fill="#1F0404" />
     </svg>
@@ -157,6 +158,23 @@ export const ZoomOutIcon = () => {
       <path
         d="M6.6665 14.6667V17.3333H25.3332V14.6667H6.6665Z"
         fill="#1F0404"
+      />
+    </svg>
+  );
+};
+
+export const DeleteIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+    >
+      <path
+        d="M5 4V1C5 0.44772 5.44772 0 6 0H14C14.5523 0 15 0.44772 15 1V4H20V6H18V19C18 19.5523 17.5523 20 17 20H3C2.44772 20 2 19.5523 2 19V6H0V4H5ZM11.4142 11.9997L13.182 10.232L11.7678 8.8178L10 10.5855L8.2322 8.8178L6.81802 10.232L8.5858 11.9997L6.81802 13.7675L8.2322 15.1817L10 13.4139L11.7678 15.1817L13.182 13.7675L11.4142 11.9997ZM7 2V4H13V2H7Z"
+        fill="black"
       />
     </svg>
   );

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-
+const cart = true;
 const AddedToCartAlert = () => {
   return (
     <div
       role="alert"
-      className="bg-red-500  w-full relative top-0 px-2 py-0.5  flex flex-row-reverse items-center justify-between"
+      className="bg-red-500  w-full relative top-0 translate-y-full px-2 py-0.5  flex flex-row-reverse items-center justify-between"
     >
       <Link to={'/cart'} className="btn btn-ghost">
         <svg

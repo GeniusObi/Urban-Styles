@@ -3,7 +3,7 @@ import logo from '../assets/logo.png';
 import FooterLogo from '../assets/FooterLogo.png';
 const Footer = () => {
   return (
-    <section className=" px-5  form-control bg-[rgb(31,4,4)] gap-2 lg:bg-[rgb(31,4,4)]   text-white">
+    <section className=" px-5  form-control bg-[rgb(31,4,4)] gap-2 lg:bg-[rgb(31,4,4)]   text-white 2xl:h-[53vh]">
       <div
         id="up-tag"
         className="grid grid-cols-3 gap-3  items-center py-16  border-[#FFF4F4] border-b lg:gap-0 "
@@ -28,7 +28,7 @@ const Footer = () => {
             <a href="/about">ABOUT</a>
           </li>
           <li>
-            <a href="/products">PRODUCT</a>
+            <a href="/products">PRODUCTS</a>
           </li>
           <li>
             <a href="/wishlist">WISHLIST</a>

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { PlusIcon, HeartIcon } from '../icons';
 import { products } from '../utils/constants';
-import { Button } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
+import { AiOutlineHeart } from 'react-icons/ai';
 
 const AllProducts = () => {
   const [wishlist, setWishList] = useState<boolean>(false);
@@ -26,15 +27,23 @@ const AllProducts = () => {
         </div>
       </div>
       {/* Products */}
-      <div
+      <Row
         id="products-display-section"
-        className="grid grid-cols-1 gap-y-8 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
+        // className="grid grid-cols-1 gap-y-8 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
+        gutter={[32, 32]}
       >
-        {products.map((product) => {
+        {products.map((product, index) => {
           const { name, image, price } = product;
           return (
-            <div key={name} className="w-full relative lg:w-[380px] ">
-              <article className="w-full relative form-control gap-3">
+            // <div
+            //   key={index}
+            //   className="w-full relative lg:w-[380px] 2xl:w-full "
+            // >
+
+            // </div>
+
+            <Col key={index} xs={24} md={12} xl={8}>
+              <article className="w-full relative  flex flex-col gap-3">
                 {/* product image */}
                 <img
                   src={image}
@@ -43,33 +52,35 @@ const AllProducts = () => {
                 />
                 {/* product description */}
                 <div className=" flex items-center justify-between">
-                  <div className="description">
-                    <h2 className="card-title">
+                  <div className="description flex flex-col gap-4">
+                    <h2 className=" text-lg 2xl:text-6xl">
                       Slim V Neck Limited Pique Polo
                     </h2>
-                    <p className="mt-2">{price}</p>
+                    <p className="mt-2 2xl:text-4xl">{price}</p>
                   </div>
                   <Button
                     type="text"
-                    className="border btn rounded-none border-[#1F0404] bg-[#FFF4F4] p-3 w-[48px] h-[48px] self-end "
+                    className="border  btn rounded-none mt-4 border-[#1F0404] bg-[#FFF4F4] p-3 w-[48px] h-[48px] self-end flex justify-center items-center 2xl:h-[7rem] 2xl:w-[7rem] "
                   >
                     <PlusIcon />
                   </Button>
                   <button
                     type="button"
-                    className={`border rounded-none   border-[#1F0404]  absolute top-4  right-6  p-2 w-10 h-10 ${
-                      wishlist ? 'bg-[#1F0404] text-white' : null
+                    className={`border rounded-none   border-[#1F0404] flex items-center justify-center text-2xl  absolute top-8  right-6  p-2 w-10 h-10 ${
+                      wishlist ? 'bg-black ' : null
                     }`}
                     onClick={() => setWishList(!wishlist)}
                   >
-                    <HeartIcon />
+                    <AiOutlineHeart
+                      className={`${wishlist ? 'text-white' : 'text-black'}`}
+                    />
                   </button>
                 </div>
               </article>
-            </div>
+            </Col>
           );
         })}
-      </div>
+      </Row>
     </section>
   );
 };

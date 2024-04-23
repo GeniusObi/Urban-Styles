@@ -22,6 +22,7 @@ const FormInput = ({ name, type }: formInputProp) => {
             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
           </svg>
           <input
+            name={name}
             type="text"
             className="grow bg-[#FFF4F4]   focus:outline-none"
             placeholder="Username"
@@ -47,7 +48,7 @@ const FormInput = ({ name, type }: formInputProp) => {
           <input
             name={name}
             type={type}
-            className="grow bg-[#FFF4F4]   focus:outline-none active::bg-[#FFF4F4] "
+            className="grow bg-[#FFF4F4]  placeholder:no-underline focus:bg-[#FFF4F4] "
             placeholder="JohnDoe@gmail.com"
             required
           />
@@ -59,7 +60,7 @@ const FormInput = ({ name, type }: formInputProp) => {
   if (type === 'password') {
     return (
       <>
-        <Password size="large" required />
+        <Password name={name} size="large" required />
       </>
     );
   }

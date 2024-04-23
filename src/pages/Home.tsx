@@ -7,43 +7,80 @@ import releaseC from '../assets/releaseC.png';
 import imageA from '../assets/imageA.png';
 import imageB from '../assets/imageB.png';
 import imageC from '../assets/imageC.png';
-import { Button } from 'antd';
-export const loader = async () => {
-  return null;
+import aboutMobile from '../assets/about-img-mobile.png';
+import aboutDesktop from '../assets/about-img.png';
+import { Button, Col, Row } from 'antd';
+import { useEffect, useRef } from 'react';
+import customFetch from '@/utils/Fetch';
+import axios from 'axios';
+// import { bring } from '@/utils/Fetch';
+export const bring = async () => {
+  try {
+    const response = await customFetch.get('/');
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 const Home = () => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    bring();
+  }, []);
   return (
-    <main className="relative">
+    <main className="relative overflow-clip">
       {/* Hero Section */}
-      <section id="hero" className="py-16 px-5 mt-0 lg:py-24 lg: lg:px-12 ">
-        <h2 className="max-w-[480px] text-8xl font-medium text-center md:mx-auto  md:min-w-[700px]  lg:text-[160px]   lg:min-w-[1204px]">
+      <section
+        id="hero"
+        className="py-16 px-5 mt-0 overflow-clip lg:py-24 lg: lg:px-12 xl:mt-8"
+      >
+        {/* <h2 className="max-w-[480px] text-8xl font-medium text-center md:mx-auto  md:min-w-[700px]  lg:text-[160px]   lg:min-w-[1204px]">
           URBAN STYLES
-        </h2>
+        </h2> */}
+        <Row>
+          <Col
+            xs={24}
+            md={24}
+            lg={24}
+            xl={24}
+            xxl={24}
+            className="flex justify-center"
+          >
+            <h2 className=" text-5xl sm:text-6xl text-center md:text-8xl font-medium block  lg:text-[10rem] 2xl:text-[25rem] ">
+              URBAN STYLES
+            </h2>
+          </Col>
+        </Row>
         <div
           id="hero-images-div"
-          className="grid grid-cols-1 gap-8 mt-16 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-8 mt-16 lg:grid-cols-3 2xl:gap-8 2xl:mt-64"
         >
           <img
             src={imageA}
             alt=""
             id="imageA"
-            className=" block object-fit  "
+            className=" hidden object-fit lg:block xl:w-full"
           />
           <img
             src={imageB}
             alt=""
-            className="object-fit block relative bottom-4 md: mx-auto w-full"
+            className="object-fit block relative bottom-4 md:mx-auto w-full xl:mx-0 2xl:bottom-20"
           />
-          <img src={imageC} alt="" id="imageC" className=" block object-fit " />
+          <img
+            src={imageC}
+            alt=""
+            id="imageC"
+            className=" hidden object-fit lg:block xl:w-full"
+          />
         </div>
       </section>
       {/* ABOUT SECTION */}
       <section className="px-5 py-16 lg:px-12 lg:py-24 flex flex-col gap-24">
         <div id="upper-col" className="w-full flex">
-          <div className="first w-[10%] lg:w-[15%]"></div>
-          <div className="second w-[75%] lg:w-[75%] flex flex-col gap-6">
+          <div className="first hidden w-[10%] lg:w-[15%] lg:block"></div>
+          <div className="second w-full lg:w-[75%] flex flex-col gap-6">
             <h2 className="text-8xl">About</h2>
-            <p className="text-xl w-[328px]  md:min-w-[650px] lg:w-[976px] lg:text-2xl ">
+            <p className="text-xl max-w-[620px]  md:min-w-[650px] lg:min-w-[976px] lg:text-2xl ">
               At Urban Styles, we're not just a fashion destination; we're a
               cultural movement. We understand that clothing isn't just
               something you wear; it's a statement, a reflection of your
@@ -52,7 +89,16 @@ const Home = () => {
             <Link to={'products'}>SEE MORE</Link>
           </div>
         </div>
-        <div id="lower-col" className="about-img  "></div>
+        <img
+          src={aboutDesktop}
+          alt="Urban Styles"
+          className="hidden lg:block object-cover"
+        />
+        <img
+          src={aboutMobile}
+          className="block object-cover lg:hidden"
+          alt="Urban Styles"
+        />
       </section>
       {/* NEW RELEASE SECTION */}
       <NewReleases />
@@ -78,6 +124,10 @@ const Home = () => {
       <AllProducts />
       {/* News Section */}
       <News />
+      {/* test button */}
+      <button type="button" ref={buttonRef} className="bg-base-200">
+        test
+      </button>
     </main>
   );
 };
