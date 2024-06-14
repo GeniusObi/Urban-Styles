@@ -5,29 +5,46 @@ import { PlusIcon } from '../icons';
 import { useState } from 'react';
 import AddToWishlistButton from './AddToWishlistButton';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { imageType } from '@/pages/Products';
 
 type Product = {
-  id: number;
-  name: string;
-  image?: string;
-  price: string;
-  description: string;
-  colors: string[];
-  sizes: string[];
-  amount: number;
+  id: string;
+  createdTime: string;
+  fields: {
+    name: string;
+    price: string;
+    description: string;
+    quantity: number;
+    Size: string[];
+    colors: string[];
+    images: imageType[];
+    productReviews?: any;
+  };
 };
 
 type Props = {
   product: Product;
 };
 const ProductCard = ({ product }: Props) => {
+  const { id, fields } = product;
+  const { name, price, images } = fields;
+  const image = images[0];
+  const url = image.url;
   return (
-    <div className=" w-full relative flex flex-col gap-3">
-      <img src={releaseA} alt="" className="object-cover block object-center" />
+    // Todo: Check the link element wrapping this component ,
+    // it's the reason the paragraph element on hover has a light blue text color.
+    // So correct that.
+
+    <div className=" w-full relative h-full flex flex-col gap-3">
+      <img
+        src={url}
+        alt="Urban Styles"
+        className="object-cover block  object-center"
+      />
       <div className=" flex items-center justify-between">
         <div className="description">
-          <h2 className="text-xl">{product.name}</h2>
-          <p className="mt-2 text-lg">{product.price} ($44)</p>
+          <h2 className="text-xl hover:text-black">{name}</h2>
+          <p className="mt-2 text-lg ">{price} or ($44)</p>
         </div>
         <Button
           type="text"
@@ -35,7 +52,7 @@ const ProductCard = ({ product }: Props) => {
         >
           <AiOutlinePlus />
         </Button>
-        <AddToWishlistButton product={product} />
+        {/* <AddToWishlistButton product={product} /> */}
       </div>
     </div>
   );

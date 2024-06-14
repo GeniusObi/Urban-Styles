@@ -10,6 +10,8 @@ import CartPage from './CartPage';
 import RegisterPage from './RegisterPage';
 import Login from './Login';
 import Checkout from './Checkout';
+import SearchPage from './SearchPage';
+
 export {
   Home,
   SharedLayout,
@@ -23,4 +25,5 @@ export {
   RegisterPage,
   Login,
   Checkout,
+  SearchPage,
 };

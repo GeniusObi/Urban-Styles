@@ -11,17 +11,14 @@ import {
   Wishlist,
   Login,
   Checkout,
+  SearchPage,
 } from './pages';
 import About from './pages/About';
-// LOADERS
-import { loader as productsLoader } from './pages/Products';
-import { loader as singleProductLoader } from './pages/SingleProduct';
-// ACTIONS
-// import { action as registerAction } from './pages/RegisterPage';
 import { action as loginAction } from './pages/Login';
 import { action as cartPageAction } from './pages/CartPage';
 
 import { ErrorElement } from './components';
+import PrivateRoute from './pages/PrivateRoute';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -33,21 +30,17 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'products',
+        path: '/products',
         element: <Products />,
-        loader: productsLoader,
+
         errorElement: <ErrorElement />,
       },
       {
-        path: 'products/:id',
+        path: '/products/:id',
         element: <SingleProduct />,
-        loader: singleProductLoader,
         errorElement: <ErrorElement />,
       },
-      {
-        path: 'about',
-        element: <About />,
-      },
+
       {
         path: 'contact',
         element: <Contact />,
@@ -57,8 +50,16 @@ const router = createBrowserRouter([
         element: <Wishlist />,
       },
       {
-        path: 'checkout',
-        element: <Checkout />,
+        path: '/checkout',
+        element: (
+          <PrivateRoute>
+            <Checkout />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'search/:id',
+        element: <SearchPage />,
       },
       {
         path: 'cart',

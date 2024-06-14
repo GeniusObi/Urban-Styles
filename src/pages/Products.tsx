@@ -1,39 +1,63 @@
+import { ProductCard } from '@/components';
+import { useFilterContext } from '@/context/filterContext';
+
 import { HeartIcon, PlusIcon } from '@/icons';
-import customFetch from '@/utils/Fetch';
+import customFetch, { productFetch } from '@/utils/Fetch';
 import { products } from '@/utils/constants';
 import { Button, Col, Row } from 'antd';
-import { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import { Link, useLoaderData } from 'react-router-dom';
 
-export const loader = async () => {
-  try {
-    const { data } = await customFetch.get('/product');
-    console.log(data);
-    return { data };
-  } catch (error) {
-    console.log(error);
-  }
+export type imageType = {
+  width: number;
+  height: number;
+  id: string;
+  filename: string;
+  size: number;
+  type: string;
+  url: any;
+  thumbnails: {
+    full: { url: string; width: number; height: number };
+    small: { url: string; width: number; height: number };
+    large: { url: string; width: number; height: number };
+  };
 };
 type product = {
-  name: string;
-  image_url: any;
-  price: string;
-  description: string;
-  quantity: number;
+  id: string;
+  createdTime: string;
+  fields: {
+    name: string;
+
+    price: string;
+    description: string;
+    quantity: number;
+    Size: string[];
+    colors: string[];
+    images: imageType[];
+    featured: boolean;
+  };
 };
 
 const Products = () => {
-  const [wishlist, setWishList] = useState<boolean>(false);
-  const { data } = useLoaderData() as { data: product[] };
+  const { filteredProducts, updateSort } = useFilterContext();
+
   return (
     <main className="min-h-screen mt-10">
       {/* title section */}
       <div className=" flex py-16 px-5  justify-between p lg:px-16 lg:py-24 ">
         <h2>ALL PRODUCTS</h2>
-        <select name="sort" id="sort" className="bg-[#FFF4F4;]">
-          <option value="LOWEST">SORT BY</option>
-          <option value="LOWEST">VEST</option>
-          <option value="HIGHEST">HOODIE</option>
+        <select
+          name="sort"
+          id="sort"
+          className="bg-[#FFF4F4] outline-none"
+          value={'SORT-BY'}
+          // onChange={(e: FormEvent<HTMLSelectElement>) => {
+          //   updateSort(e.currentTarget.value);
+          // }}
+        >
+          <option value="SORT-BY">SORT BY</option>
+          <option value="VEST">VEST</option>
+          <option value="HOODIE">HOODIE</option>
         </select>
       </div>
       {/* Product section */}
@@ -43,8 +67,11 @@ const Products = () => {
           // className="grid grid-cols-1 gap-y-8 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
           gutter={[32, 32]}
         >
-          {data.map((product, index) => {
-            const { name, image_url, price } = product;
+          {filteredProducts.map((product, index) => {
+            const { id, fields } = product;
+            const { name, images, price } = fields;
+            const image = images[0];
+            const url = image.url;
             return (
               // <div
               //   key={index}
@@ -54,36 +81,12 @@ const Products = () => {
               // </div>
 
               <Col key={index} xs={24} md={12} xl={8}>
-                <article className="w-full relative form-control gap-3">
-                  {/* product image */}
-                  <img
-                    src={image_url}
-                    alt="Urban Styles Product"
-                    className="object-fit w-full"
-                  />
-                  {/* product description */}
-                  <div className=" flex items-center justify-between">
-                    <div className="description">
-                      <h2 className="card-title">{name}</h2>
-                      <p className="mt-2">{price}</p>
-                    </div>
-                    <Button
-                      type="text"
-                      className="border  btn rounded-none mt-4 border-[#1F0404] bg-[#FFF4F4] p-3 w-[48px] h-[48px] self-end flex justify-center items-center"
-                    >
-                      <PlusIcon />
-                    </Button>
-                    <button
-                      type="button"
-                      className={`border rounded-none   border-[#1F0404]  absolute top-8  right-6  p-2 w-10 h-10 ${
-                        wishlist ? 'bg-[#1F0404] text-white' : null
-                      }`}
-                      onClick={() => setWishList(!wishlist)}
-                    >
-                      <HeartIcon />
-                    </button>
-                  </div>
-                </article>
+                <Link
+                  to={`/products/${id}`}
+                  className="w-auto h-20 text-black hover:text-black"
+                >
+                  <ProductCard product={product} />
+                </Link>
               </Col>
             );
           })}

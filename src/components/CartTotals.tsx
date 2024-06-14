@@ -1,7 +1,8 @@
+import { useUserContext } from '@/context/userContext';
 import { Link } from 'react-router-dom';
 
-const myUser = true;
 const CartTotals = () => {
+  const { user } = useUserContext();
   return (
     <section
       id="rightcol"
@@ -26,7 +27,7 @@ const CartTotals = () => {
           </ul>
         </div>
       </div>
-      {myUser ? (
+      {user ? (
         <Link
           to={'/checkout'}
           className=" btn  rounded-none px-8 py-4 self-start bg-[#1F0404] capitalize text-[#FFF4F4]"

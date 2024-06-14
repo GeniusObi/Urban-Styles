@@ -1,35 +1,39 @@
 import { images, reviews } from '../utils/constants';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ReviewsForm } from '../components';
 import { formHandle } from '../components/ReviewsForm';
 import { Col, Row } from 'antd';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { productFetch } from '@/utils/Fetch';
+import { imageType } from './Products';
 
-export const loader = async () => {
-  return null;
+type product = {
+  id: string;
+  createdTime: string;
+  fields: {
+    name: string;
+    price: string;
+    description: string;
+    quantity: number;
+    Size: string[];
+    colors: string[];
+    images: imageType[];
+    featured?: boolean;
+  };
 };
-
 let sizeArray: Array<string>;
 sizeArray = ['XL', 'L', 'M', 'S'];
 let colorArray: Array<string>;
 colorArray = ['bg-blue-300', 'bg-red-600', 'bg-black'];
+
 const SingleProduct = () => {
+  const { id } = useParams<string>();
   const [btnSize, setBtnSize] = useState<string>(sizeArray[0]);
   const [btnColor, setBtnColor] = useState<string>(colorArray[0]);
-  const [currentImage, setCurrentImage] = useState<string>(images[0]);
+
   const ExternalReviewFormRef = useRef<formHandle>(null);
 
-  // function handleSave(data: unknown) {
-  //   const extractedData = data as {
-  //     name: string;
-  //     description: string;
-  //     location: string;
-  //     image: string;
-  //   };
-
-  //   reviews.push(extractedData);
-
-  //   ExternalReviewFormRef.current?.clear();
-  // }
   function handleSave(data: unknown) {
     const extractedData = data as {
       name: string;
@@ -42,6 +46,34 @@ const SingleProduct = () => {
     ExternalReviewFormRef.current?.clear();
   }
 
+  const [singleProduct, setSingleProduct] = useState<product | undefined>(
+    undefined
+  );
+
+  const getSingleProduct = async (id: string | undefined) => {
+    try {
+      const response = await productFetch(`/products/${id}`, {
+        method: 'get',
+      });
+      const data = await response.data;
+      setSingleProduct(data);
+      console.log(singleProduct);
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  };
+
+  useEffect(() => {
+    getSingleProduct(id);
+  }, [id]);
+
+  useEffect(() => {
+    console.log(singleProduct);
+  }, [singleProduct]);
+
+  const [currentImage, setCurrentImage] = useState<string>(
+    singleProduct?.fields.images[0].url
+  );
   return (
     <>
       {/* Product details section */}
@@ -70,18 +102,18 @@ const SingleProduct = () => {
                   id="side-images "
                   className="h-full  shrink-0  flex flex-row   gap-4 lg:flex-col 2xl:gap-10  "
                 >
-                  {images.map((image, index) => {
+                  {singleProduct?.fields.images.map((image, index) => {
                     return (
                       <img
                         key={index}
-                        src={image}
+                        src={image.url}
                         alt="Single Product Image"
-                        className={`object-cover w-full h-full ${
-                          currentImage === image
+                        className={`object-center w-full h-full ${
+                          currentImage === image.url
                             ? ' outline outline-[#1F0404]  outline-offset-4'
                             : null
                         }`}
-                        onClick={() => setCurrentImage(image)}
+                        onClick={() => setCurrentImage(image.url)}
                       />
                     );
                   })}
@@ -103,16 +135,13 @@ const SingleProduct = () => {
           >
             <div>
               <h2 className="font-medium text-2xl w-fit 2xl:text-6xl">
-                OVERSIZED BEAR BREAST
+                {singleProduct?.fields.name}
               </h2>
               <p className="w-full  text-base leading-tight font-normal mt-8  2xl:text-6xl  2xl:leading-[72px] ">
-                The Oversized Overdye Extended Neck Today T-shirt Blends
-                Comtemporary Aesthetics With A Classic Touch.The Extended Neck
-                Design Adds An Edgy Twist Making Sure You Catch Every Eye As
-                Make Your Mark On The Urban Landscape.
+                {singleProduct?.fields.description}
               </p>
               <p className="font-medium text-2xl mt-8 2xl:text-6xl">
-                N40,000 $(20)
+                {singleProduct?.fields.price}
               </p>
               <div id="actions " className="mt-[101px]">
                 {/* choice actions */}
@@ -121,7 +150,7 @@ const SingleProduct = () => {
                   className="flex justify-between items-center 2xl:relative bottom-20"
                 >
                   <div id="color-buttons" className="flex gap-4">
-                    {colorArray.map((color) => {
+                    {singleProduct?.fields.colors.map((color) => {
                       return (
                         <button
                           key={color}
@@ -136,7 +165,7 @@ const SingleProduct = () => {
                     })}
                   </div>
                   <div id="size-buttons" className="flex gap-2">
-                    {sizeArray.map((size) => {
+                    {singleProduct?.fields.Size.map((size) => {
                       return (
                         <button
                           key={size}

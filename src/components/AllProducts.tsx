@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { PlusIcon, HeartIcon } from '../icons';
+import { PlusIcon } from '../icons';
 import { products } from '../utils/constants';
 import { Button, Col, Row } from 'antd';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { useProductContext } from '@/context/productContext';
+import { useWishlist } from '@/context/WishlistContext';
+import WishlistButton from './WishlistButton';
 
 const AllProducts = () => {
-  const [wishlist, setWishList] = useState<boolean>(false);
+  const { products } = useProductContext();
+  const { addToWishlist, wishlist, removeFromWishlist } = useWishlist();
   return (
     <section className="flex flex-col gap-8 py-16 px-5 lg:gap-16 lg:py-24 lg:px-12">
       {/*Section Title */}
@@ -32,8 +36,12 @@ const AllProducts = () => {
         // className="grid grid-cols-1 gap-y-8 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
         gutter={[32, 32]}
       >
-        {products.map((product, index) => {
-          const { name, image, price } = product;
+        {products.slice(0, 6).map((product, index) => {
+          const { id, fields } = product;
+          const { name, images, price } = fields;
+          const image = images[0];
+          const url = image.url;
+
           return (
             // <div
             //   key={index}
@@ -46,16 +54,14 @@ const AllProducts = () => {
               <article className="w-full relative  flex flex-col gap-3">
                 {/* product image */}
                 <img
-                  src={image}
+                  src={url}
                   alt="Urban Styles Product"
                   className="object-fit w-full"
                 />
                 {/* product description */}
                 <div className=" flex items-center justify-between">
                   <div className="description flex flex-col gap-4">
-                    <h2 className=" text-lg 2xl:text-6xl">
-                      Slim V Neck Limited Pique Polo
-                    </h2>
+                    <h2 className=" text-lg 2xl:text-6xl">{name}</h2>
                     <p className="mt-2 2xl:text-4xl">{price}</p>
                   </div>
                   <Button
@@ -64,17 +70,12 @@ const AllProducts = () => {
                   >
                     <PlusIcon />
                   </Button>
-                  <button
-                    type="button"
-                    className={`border rounded-none   border-[#1F0404] flex items-center justify-center text-2xl  absolute top-8  right-6  p-2 w-10 h-10 ${
-                      wishlist ? 'bg-black ' : null
-                    }`}
-                    onClick={() => setWishList(!wishlist)}
-                  >
-                    <AiOutlineHeart
-                      className={`${wishlist ? 'text-white' : 'text-black'}`}
-                    />
-                  </button>
+                  <WishlistButton
+                    product={product}
+                    isInWishlist={wishlist.includes(product)}
+                    addToWishlist={addToWishlist}
+                    removeFromWishlist={removeFromWishlist}
+                  />
                 </div>
               </article>
             </Col>

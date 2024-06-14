@@ -1,65 +1,74 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useReducer } from 'react';
+import reducer from '../reducers/wishlist_reducer';
+import { imageType } from '@/pages/Products';
 
-export type Product = {
-  id: number;
-  name: string;
-  image?: string;
-  price: string;
-  description: string;
-  colors: string[];
-  sizes: string[];
-  amount: number;
+type product = {
+  id: string;
+  createdTime: string;
+  fields: {
+    name: string;
+    price: string;
+    description: string;
+    quantity: number;
+    Size: string[];
+    colors: string[];
+    images: imageType[];
+    featured?: boolean;
+  };
 };
 
-type WishlistContextType = {
-  wishlist: Product[];
-  addToWishlist: (product: Product) => Product[];
-  removeFromWishlist: (product: Product) => Product[];
+type AddToWishlistAction = {
+  type: 'ADD_TO_WISHLIST';
+  payload: product;
 };
 
-const WishlistContext = createContext<WishlistContextType | undefined>(
-  undefined
-);
+type RemoveFromWishlistAction = {
+  type: 'REMOVE_FROM_WISHLIST';
+  payload: string;
+};
+
+type Action = AddToWishlistAction | RemoveFromWishlistAction;
+
+type wishlistState = {
+  wishlist: product[];
+};
+
+type WishlistContextValue = wishlistState & {
+  addToWishlist: (product: product) => void;
+  removeFromWishlist: (id: string) => void;
+};
+
+let initialState: wishlistState = {
+  wishlist: [],
+};
+
+const WishlistContext = createContext<WishlistContextValue | null>(null);
 
 const WishlistProvider = ({ children }: React.PropsWithChildren) => {
-  // const [wishlist, setWishlist] = useState<Product[]>([]);
-  let wishlist: Product[] = [];
-  const addToWishlist = (product: Product) => {
-    wishlist.push(product);
-    console.log('item added to wishlist');
-    console.log(wishlist);
-    return wishlist;
-  };
-  const removeFromWishlist = (product: Product) => {
-    const newWishlist = wishlist.filter((item) => item.id !== product.id);
-    wishlist = newWishlist;
-    console.log('item removed from wishlist');
-    console.log(wishlist);
-    return wishlist;
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const ctx: WishlistContextValue = {
+    wishlist: state.wishlist,
+    addToWishlist(product) {
+      dispatch({ type: 'ADD_TO_WISHLIST', payload: product });
+    },
+    removeFromWishlist(id) {
+      dispatch({ type: 'REMOVE_FROM_WISHLIST', payload: id });
+    },
   };
 
   return (
-    <WishlistContext.Provider
-      value={{ wishlist, addToWishlist, removeFromWishlist }}
-    >
-      {children}
-    </WishlistContext.Provider>
+    <WishlistContext.Provider value={ctx}>{children}</WishlistContext.Provider>
   );
 };
 
-// function useWishlist(): WishlistContextType {
-//   const context = useContext(WishlistContext);
-//   if (context === undefined) {
-//     throw new Error('context cannot be undefined');
-//   }
-//   return context;
-// }
-function useWishlist(): WishlistContextType {
-  const context = useContext(WishlistContext);
-  if (context === undefined) {
-    throw new Error('context cannot be undefined');
+function useWishlist() {
+  const wishlistCtx = useContext(WishlistContext);
+  if (wishlistCtx === null) {
+    throw new Error(
+      'useWishlistContext must be used within a WishlistProvider'
+    );
   }
-  return context;
+  return wishlistCtx;
 }
 
 export { WishlistProvider, useWishlist };

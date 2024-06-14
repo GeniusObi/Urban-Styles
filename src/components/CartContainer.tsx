@@ -1,5 +1,5 @@
-import React from 'react';
-import { Product as ProductSchema } from '@/context/WishlistContext';
+// import React from 'react';
+// import { Product as ProductSchema } from '@/context/WishlistContext';
 import { products } from '@/utils/constants';
 import CartItem from './CartItem';
 let cart = products;

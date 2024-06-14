@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-const cart = true;
+// const cart = true;
 const AddedToCartAlert = () => {
   return (
     <div

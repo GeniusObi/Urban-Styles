@@ -11,8 +11,11 @@ import aboutMobile from '../assets/about-img-mobile.png';
 import aboutDesktop from '../assets/about-img.png';
 import { Button, Col, Row } from 'antd';
 import { useEffect, useRef } from 'react';
-import customFetch from '@/utils/Fetch';
+import customFetch, { productFetch } from '@/utils/Fetch';
 import axios from 'axios';
+import { useUserContext } from '@/context/userContext';
+import { useProductContext } from '@/context/productContext';
+import { useWishlist } from '@/context/WishlistContext';
 // import { bring } from '@/utils/Fetch';
 export const bring = async () => {
   try {
@@ -22,11 +25,46 @@ export const bring = async () => {
     console.log(error);
   }
 };
+
+export const getProducts = async () => {
+  try {
+    const response = await productFetch('/products', {
+      method: 'get',
+    });
+    const product = await response.data;
+    return product;
+    // console.log(records[0].fields.images[0].url);
+  } catch (error: any) {
+    console.log(error?.response);
+  }
+};
+export const getSingleProduct = async (id?: string) => {
+  try {
+    const response = await productFetch(`/products/${id}`, {
+      method: 'get',
+    });
+    const product = await response.data;
+    return product;
+    // console.log(records[0].fields.images[0].url);
+  } catch (error: any) {
+    console.log(error?.response);
+  }
+};
+
 const Home = () => {
+  const { getLocalStorageUser } = useUserContext();
+  const { products } = useProductContext();
+  const { wishlist } = useWishlist();
+  const user = getLocalStorageUser();
+
   const buttonRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    bring();
+    getProducts();
   }, []);
+
+  // console.log(products);
+  console.log(wishlist);
+
   return (
     <main className="relative overflow-clip">
       {/* Hero Section */}
@@ -112,22 +150,18 @@ const Home = () => {
             Become a part of the chorus and unlock exciting opportunities for
             mutual growth and success.
           </p>
-          <Link
-            to={'/products'}
+          <a
+            href="/contact"
             className=" capitalize   p-4 border-[#fff] flex items-center   justify-center mt-16  border w-[194px] h-[56px] hover:bg-[rgb(31,4,4)] text-white  lg:block mx-auto"
           >
             contact sales <RightArrow />
-          </Link>
+          </a>
         </div>
       </section>
       {/* All Products Section */}
       <AllProducts />
       {/* News Section */}
       <News />
-      {/* test button */}
-      <button type="button" ref={buttonRef} className="bg-base-200">
-        test
-      </button>
     </main>
   );
 };

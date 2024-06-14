@@ -1,38 +1,60 @@
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, Navigate, redirect, useNavigate } from 'react-router-dom';
 import FormInput from '../components/FormInput';
 import { SubmitBtn } from '../components';
 import logo from '../assets/logo.png';
 import { type FormEvent } from 'react';
 import customFetch from '@/utils/Fetch';
 import axios, { AxiosError } from 'axios';
+import { useUserContext } from '@/context/userContext';
+
 // export const action = async ({ request }) => {
 //   const formData = await request.formData();
 // };
-const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  const formdata = new FormData(event.currentTarget);
-  const data = Object.fromEntries(formdata);
 
-  try {
-    const response = await customFetch.post(
-      '/auth/users/',
-      JSON.stringify(data),
-      {
+const RegisterPage = () => {
+  const { setLocalStorageUser } = useUserContext();
+  const navigate = useNavigate();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formdata = new FormData(event.currentTarget);
+
+    const username = formdata.get('username');
+    const password = formdata.get('password');
+    const email = formdata.get('email');
+    const body = { email, username, password };
+    console.log({ username, password, email });
+    event.currentTarget.reset();
+
+    try {
+      // const response = await axios(
+      //   'https://ariestobells.pythonanywhere.com/auth/users/',
+      //   {
+      //     method: 'post',
+      //     data: body,
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //   }
+      // );
+      const userData = await customFetch('/auth/users/', {
+        method: 'post',
+        data: body,
         headers: {
           'Content-Type': 'application/json',
         },
-      }
-    );
-    console.log(response.data);
-  } catch (error) {
-    console.log(error);
-  }
-  // event.currentTarget.reset();
-};
+      });
 
-const RegisterPage = () => {
+      const { email, username, id } = userData?.data;
+
+      // localStorage.setItem('user', JSON.stringify(userData.data));
+      setLocalStorageUser({ email, username });
+      return navigate('/login');
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  };
   return (
-    <main className=" h-screen grid place-items-center   ">
+    <main className=" h-screen grid place-items-center">
       <form
         className="card w-96  flex flex-col gap-4  shadown-xl"
         onSubmit={handleSubmit}

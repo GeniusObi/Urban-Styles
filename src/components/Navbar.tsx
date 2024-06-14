@@ -1,4 +1,4 @@
-import { Form, Link, NavLink } from 'react-router-dom';
+import { Form, Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { CartIcon, SearchIcon } from '../icons';
 import { Col, Dropdown, MenuProps, Row } from 'antd';
@@ -12,8 +12,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import HoverBlock from './HoverBlock';
+import AuthButtons from './AuthButtons';
 const myUser = true;
 const cart = !true;
 
@@ -31,7 +32,16 @@ const items: MenuProps['items'] = [
     label: <Link to={'/login'}>login</Link>,
   },
 ];
+
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleSearchOrder = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const searchOrder = formData.get('search-query');
+    navigate(`/search/${searchOrder}`);
+    event.currentTarget.reset();
+  };
   return (
     <nav
       className={`border-[rgb(31,4,4)] border-b min-h-[128px]  px-5 ${
@@ -47,9 +57,7 @@ const Navbar = () => {
           <li>
             <NavLink to={'/'}>HOME</NavLink>
           </li>
-          <li>
-            <NavLink to={'/about'}>ABOUT</NavLink>
-          </li>
+
           <li>
             <NavLink to={'/contact'}>CONTACT</NavLink>
           </li>
@@ -82,11 +90,7 @@ const Navbar = () => {
                       HOME
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink to={'/about'} className={'text-black'}>
-                      ABOUT
-                    </NavLink>
-                  </li>
+
                   <li>
                     <NavLink to={'/contact'} className={'text-black'}>
                       CONTACT
@@ -120,8 +124,8 @@ const Navbar = () => {
         // gutter={[16, 16]}
       >
         <div className="w-full lg:w-fit">
-          <Form
-            id="input-container"
+          <form
+            onSubmit={handleSearchOrder}
             className="max-w-xl justify-self-stretch border-[#999999] p-3 border flex items-center gap-4  focus-within:border-2 lg:w-[450px] 2xl:min-w-[1050px] "
           >
             <div className="search-icon   focus:border-[#999999]">
@@ -132,9 +136,10 @@ const Navbar = () => {
                 type="text"
                 className="w-full bg-[rgb(255,244,244)] outline-none"
                 placeholder="search"
+                name="search-query"
               />
             </div>
-          </Form>
+          </form>
         </div>
         <div className="flex gap-4 items-center">
           <Link
@@ -144,7 +149,7 @@ const Navbar = () => {
           >
             <CartIcon /> (6)
           </Link>
-          <HoverBlock />
+          <AuthButtons />
         </div>
       </div>
     </nav>

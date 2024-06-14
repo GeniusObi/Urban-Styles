@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React from 'react';
+
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 type AmountButtonsProps = {
   amount: number;
